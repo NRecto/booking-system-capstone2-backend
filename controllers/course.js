@@ -30,6 +30,7 @@ module.exports.update = (reqBody) => {
             price: reqBody.price
         })
         .then(() => true)
+        .catch(err => false)
 }
 
 module.exports.archive = courseId => {
