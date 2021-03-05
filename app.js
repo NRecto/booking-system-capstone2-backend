@@ -26,7 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 const coursesRoutes = require('./routes/course')
-app.use('/api/course', coursesRoutes)
+app.use('/api/courses', coursesRoutes)
 
 
 
