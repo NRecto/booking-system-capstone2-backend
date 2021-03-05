@@ -1,8 +1,12 @@
 const routes = require('express').Router();
 
+const CourseController = require('./../controllers/course')
+
 // create course
 routes.post('/', (req, res) => {
-    res.send(`Add courses`)
+    CourseController.add(req.body).then(course => {
+        res.send(course)
+    })
 })
 
 module.exports = routes;
