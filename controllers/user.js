@@ -1,4 +1,5 @@
 const User = require('./../models/User');
+const Course = require('./../models/Course')
 const bcrypt = require('bcrypt');
 const auth = require('./../auth')
 const jwt = require('jsonwebtoken');
@@ -42,4 +43,24 @@ module.exports.login = (reqBody) => {
 
 module.exports.details = (id) => {
     return User.findById(id, { password: 0 }).then(user => user)
+};
+
+module.exports.enroll = (id, courseId) => {
+    return Course.findById(courseId).then(result => {
+        if (!courseId) {
+            return { msg: 'course not available' };
+        };
+        if (courseId) {
+            return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId }] } }, { new: true })
+
+        }
+    }).then(updateCourse => {
+        return Course.findByIdAndUpdate(courseId, {
+            $push: {
+                enrollees: [{ userId: id }]
+            }
+        }, { new: true })
+        return true
+
+    })
 }

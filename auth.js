@@ -20,11 +20,7 @@ module.exports.verify = (req, res, next) => {
         jwt.verify(token, process.env.SECRET, (err, decoded) => {
             if (!err) req.decodedToken = decoded;
             return err ? res.send({ auth: 'failed1' }) : next();
-
-
         })
-
-
     } else {
         return res.send({ auth: 'failed' })
     }

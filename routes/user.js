@@ -13,12 +13,17 @@ routes.post('/login', (req, res) => {
     UserController.login(req.body).then(login => res.send(login))
 })
 // details
-const jwt = require('jsonwebtoken');
+
 routes.get('/details', auth.verify, (req, res) => {
     // res.send(req.decodedToken)
     UserController.details(req.decodedToken.id).then(result => res.send(result))
 })
 
 // enroll student
-
+routes.put('/enroll', auth.verify, (req, res) => {
+    UserController.enroll(req.decodedToken.id, req.body.courseId).then(result => {
+        return res.send(result)
+    })
+    // res.send(req.body.courseId)
+})
 module.exports = routes;
