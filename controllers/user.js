@@ -1,6 +1,7 @@
 const User = require('./../models/User');
 const bcrypt = require('bcrypt');
 const auth = require('./../auth')
+const jwt = require('jsonwebtoken');
 
 module.exports.register = (params) => {
 
@@ -39,6 +40,6 @@ module.exports.login = (reqBody) => {
         })
 }
 
-module.exports.details = (user) => {
-    res.send(user)
+module.exports.details = (id) => {
+    return User.findById(id, { password: 0 }).then(user => user)
 }

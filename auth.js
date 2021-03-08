@@ -1,27 +1,6 @@
-const User = require('./models/User');
 const jwt = require('jsonwebtoken');
 
-module.exports.authCheckToken = (req, res, next) => {
-    // check token if existing
-    if (!req.headers.authorization) return res.send(`why`);
 
-    // decode token
-
-    let token = req.headers.authorization.replace("Bearer ", "")
-
-    let decoded = jwt.verify(token, process.env.SECRET);
-    // console.log(decoded.id)
-
-    User.findById(decoded.id)
-        .then(user => {
-            if (!user) {
-                return res.send(`Bawal ka Dito!!!`);
-
-            }
-            return user;
-            next();
-        })
-}
 module.exports.createAccessToken = (user) => {
 
     let accessToken = jwt.sign({
@@ -31,4 +10,22 @@ module.exports.createAccessToken = (user) => {
         },
         process.env.SECRET);
     return accessToken
+}
+
+module.exports.verify = (req, res, next) => {
+    let token = req.headers.authorization;
+    if (typeof token !== 'undefined') {
+        token = token.slice(7, token.length);
+
+        jwt.verify(token, process.env.SECRET, (err, decoded) => {
+            if (!err) req.decodedToken = decoded;
+            return err ? res.send({ auth: 'failed1' }) : next();
+
+
+        })
+
+
+    } else {
+        return res.send({ auth: 'failed' })
+    }
 }
