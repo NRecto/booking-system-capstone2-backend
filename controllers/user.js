@@ -1,6 +1,6 @@
 const User = require('./../models/User');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const auth = require('./../auth')
 
 module.exports.register = (params) => {
 
@@ -32,12 +32,7 @@ module.exports.login = (reqBody) => {
                 return false;
             };
 
-            let accessToken = jwt.sign({
-                    id: user._id,
-                    email: user.email,
-                    isAdmin: user.isAdmin
-                },
-                'courseBooking');
+            let accessToken = auth.createAccessToken(user)
             return {
                 Token: accessToken
             }
