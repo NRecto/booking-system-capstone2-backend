@@ -38,3 +38,7 @@ module.exports.login = (reqBody) => {
             }
         })
 }
+
+module.exports.details = (user) => {
+    res.send(user)
+}
