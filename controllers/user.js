@@ -51,16 +51,10 @@ module.exports.enroll = (id, courseId) => {
             return { msg: 'course not available' };
         };
         if (courseId) {
-            return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId }] } }, { new: true })
+            return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId: courseId }] } }, { new: true })
 
         }
     }).then(updateCourse => {
-        return Course.findByIdAndUpdate(courseId, {
-            $push: {
-                enrollees: [{ userId: id }]
-            }
-        }, { new: true })
-        return true
-
+        return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
     })
 }
