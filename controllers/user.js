@@ -47,14 +47,24 @@ module.exports.details = (id) => {
 
 module.exports.enroll = (id, courseId) => {
     return Course.findById(courseId).then(result => {
-        if (!courseId) {
-            return { msg: 'course not available' };
-        };
-        if (courseId) {
-            return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId: courseId }] } }, { new: true })
+            if (!courseId) {
+                return { msg: 'course not available' };
+            };
+            if (courseId) {
+                return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId: courseId }] } }, { new: true })
 
-        }
-    }).then(updateCourse => {
-        return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
-    })
+            }
+        }).then(updateCourse => {
+            return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
+        }).then(() => true)
+        .catch(() => false)
 }
+
+// sir alex solution
+
+// module.exports.enroll = (params) => {
+//     return User.findById(params.userId).then(user => {
+//         user.enrollments.push({ courseId: params.courseId })
+//         user.save();
+//     })
+// }

@@ -20,10 +20,24 @@ routes.get('/details', auth.verify, (req, res) => {
 })
 
 // enroll student
-routes.put('/enroll', auth.verify, (req, res) => {
-    UserController.enroll(req.decodedToken.id, req.body.courseId).then(result => {
+// routes.post('/enroll', auth.verify, (req, res) => {
+//     UserController.enroll(req.decodedToken.id, req.body.courseId).then(result => {
+//         return res.send(result)
+//     })
+
+// })
+
+
+
+
+// sir alex solution
+routes.post('/enroll', auth.verify, (req, res) => {
+    UserController.enroll({
+        userId: req.decodedToken.id,
+        courseId: req.body.courseId
+    }).then(result => {
         return res.send(result)
     })
-    // res.send(req.body.courseId)
+
 })
 module.exports = routes;

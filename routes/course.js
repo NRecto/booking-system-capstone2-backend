@@ -1,9 +1,10 @@
 const routes = require('express').Router();
 
 const CourseController = require('./../controllers/course')
+const auth = require('./../auth')
 
 // create course
-routes.post('/', (req, res) => {
+routes.post('/', auth.verify, (req, res) => {
     CourseController.add(req.body).then(course => {
         res.send(course)
     })
@@ -20,7 +21,7 @@ routes.get('/:courseId', (req, res) => {
 });
 
 // update
-routes.put('/', (req, res) => {
+routes.put('/', auth.verify, (req, res) => {
     CourseController.update(req.body).then(result => res.send(result))
     // update the selected 
     // Course id will be sent in req.body
@@ -28,7 +29,7 @@ routes.put('/', (req, res) => {
 })
 
 
-routes.delete('/:courseId', (req, res) => {
+routes.delete('/:courseId', auth.verify, (req, res) => {
     CourseController.archive(req.params.courseId).then(courses => res.send(courses))
 })
 
