@@ -1,5 +1,7 @@
-const User = require('./../models/User')
-const bcrypt = require('bcrypt')
+const User = require('./../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 module.exports.register = (params) => {
 
 
@@ -17,4 +19,27 @@ module.exports.register = (params) => {
         .catch(() => false)
     // .catch((err) => console.log(err.message))
 
+}
+
+module.exports.login = (reqBody) => {
+    return User.findOne({ email: reqBody.email })
+        .then(user => {
+            if (!user) {
+                return false;
+            }
+            let isPasswordMatched = bcrypt.compareSync(reqBody.password, user.password);
+            if (!isPasswordMatched) {
+                return false;
+            };
+
+            let accessToken = jwt.sign({
+                    id: user._id,
+                    email: user.email,
+                    isAdmin: user.isAdmin
+                },
+                'courseBooking');
+            return {
+                Token: accessToken
+            }
+        })
 }
