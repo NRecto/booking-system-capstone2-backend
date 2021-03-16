@@ -35,6 +35,6 @@ module.exports.update = (reqBody) => {
 }
 
 module.exports.archive = courseId => {
-    return Course.findByIdAndUpdate(courseId, { isActice: false })
+    return Course.findByIdAndUpdate(courseId, { isActive: false })
         .then(() => true)
 }
