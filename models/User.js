@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: [true, 'Course ID is required']
         },
+        courseName: {
+            type: String,
+            required: true
+        },
         enrolledOn: {
             type: Date,
             default: new Date()

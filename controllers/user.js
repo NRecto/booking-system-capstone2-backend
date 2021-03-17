@@ -46,19 +46,39 @@ module.exports.details = (id) => {
 };
 
 module.exports.enroll = (id, courseId) => {
-    return Course.findById(courseId).then(result => {
+    return Course.findById(courseId)
+    .then( result => {
             if (!courseId) {
                 return { msg: 'course not available' };
             };
             if (courseId) {
-                return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId: courseId }] } }, { new: true })
-
+                return User.findByIdAndUpdate(id, 
+                    { $push: { enrollments: [{ courseId: courseId, courseName: result.name }] } }, { new: true })
+                
             }
-        }).then(updateCourse => {
+    })
+    .then(updateCourse => {
             return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
-        }).then(() => true)
-        .catch((err) => err.message)
+    })
+    .then(() => true)
+    .catch((err) => err.message)
 }
+
+
+// return Course.findById(courseId).then(result => {
+//     if (!courseId) {
+//         return { msg: 'course not available' };
+//     };
+//     if (courseId) {
+//         return User.findByIdAndUpdate(id, { $push: { enrollments: [{ courseId: courseId }] } }, { new: true })
+
+//     }
+// }).then(updateCourse => {
+//     return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
+// }).then(() => true)
+// .catch((err) => err.message)
+
+
 
 // sir alex solution
 
