@@ -57,7 +57,7 @@ module.exports.enroll = (id, courseId) => {
         }).then(updateCourse => {
             return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
         }).then(() => true)
-        .catch(() => false)
+        .catch((err) => err.message)
 }
 
 // sir alex solution
@@ -67,4 +67,20 @@ module.exports.enroll = (id, courseId) => {
 //         user.enrollments.push({ courseId: params.courseId })
 //         user.save();
 //     })
+// }
+
+// module.exports.enroll = (id, courseId) => {
+//     return Course.findById(params.courseId)
+//     .then( course => {
+//         if (!course) return false;
+//         return User.findByIdAndUpdate(params.userId,{
+//             $push : { enrollments : { courseId : params.courseId}}
+//         })
+//     })
+//     .then( () =>{
+//         return Course.findByIdAndUpdate(params.courseId, {
+//             $push : { enrollees: { userId: params.userId}}
+//         })
+//     }).then(()=> true)
+//     .catch(() => false)
 // }
