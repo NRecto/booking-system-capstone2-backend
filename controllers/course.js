@@ -15,7 +15,7 @@ module.exports.add = (reqBody) => {
 };
 
 module.exports.getAll = () => {
-    return Course.find({ isActive: true })
+    return Course.find()
         .then(courses => courses)
 }
 
