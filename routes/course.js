@@ -33,4 +33,8 @@ routes.delete('/:courseId', auth.verify, (req, res) => {
     CourseController.archive(req.params.courseId).then(courses => res.send(courses))
 })
 
+routes.put('/:courseId', auth.verify, (req, res )  => {
+    CourseController.enable(req.params.courseId).then( course => res.send(course))
+})
+
 module.exports = routes;

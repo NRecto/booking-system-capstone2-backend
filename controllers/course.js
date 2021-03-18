@@ -38,3 +38,9 @@ module.exports.archive = courseId => {
     return Course.findByIdAndUpdate(courseId, { isActive: false })
         .then(() => true)
 }
+
+module.exports.enable = courseId => {
+    return Course.findByIdAndUpdate(courseId, { isActive: true })
+    .then(() => true)
+    .catch( (err) => console.log(err.message) )
+}
