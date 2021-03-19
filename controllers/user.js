@@ -61,7 +61,7 @@ module.exports.enroll = (id, courseId) => {
             return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
     })
     .then(() => true)
-    .catch((err) => err.message)
+    .catch(() => false)
 }
 
 
