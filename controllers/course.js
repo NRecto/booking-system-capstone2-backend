@@ -11,7 +11,8 @@ module.exports.add = (reqBody) => {
         description: reqBody.description,
         price: reqBody.price
     })
-    return course.save().then(() => true);
+    return course.save().then(() => true)
+    .catch( () => false);
 };
 
 module.exports.getAll = () => {
