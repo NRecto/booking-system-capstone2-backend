@@ -37,4 +37,9 @@ routes.put('/:courseId', auth.verify, (req, res )  => {
     CourseController.enable(req.params.courseId).then( course => res.send(course))
 })
 
+// POST COMMENT
+// routes.post('/:courseId', auth.verify, ( req, res ) => {
+//     CourseController.comment( req.params.courseId, req.body.comment ).then(comment => res.send(comment))
+// })
+
 module.exports = routes;

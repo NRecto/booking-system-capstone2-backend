@@ -44,4 +44,11 @@ module.exports.enable = courseId => {
     return Course.findByIdAndUpdate(courseId, { isActive: true })
     .then(() => true)
     .catch( (err) => console.log(err.message) )
+
 }
+
+// module.exports.comment = (courseId, bodyComment) => {
+//     return Course.findByIdAndUpdate(courseId, {comment: bodyComment})
+//     .then( comment => comment )
+//     .catch( () => false )
+// }
