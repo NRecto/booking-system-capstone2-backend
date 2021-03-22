@@ -3,6 +3,7 @@ const Course = require('./../models/Course')
 const bcrypt = require('bcrypt');
 const auth = require('./../auth')
 const jwt = require('jsonwebtoken');
+const { update } = require('./../models/Course');
 
 module.exports.register = (params) => {
 
@@ -58,7 +59,8 @@ module.exports.enroll = (id, courseId) => {
             }
     })
     .then(updateCourse => {
-            return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id }] } }, { new: true })
+        console.log(updateCourse)
+            return Course.findByIdAndUpdate(courseId, { $push: { enrollees: [{ userId: id, userName: updateCourse.firstName }] } }, { new: true })
     })
     .then(() => true)
 }
